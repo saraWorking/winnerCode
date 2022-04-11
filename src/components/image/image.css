@@ -1,0 +1,24 @@
+.image {
+    flex-basis: 25%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1%;
+    padding-left: 1%;
+}
+
+.image img {
+    border-radius: 8px
+}
+
+@media all and (max-width: 1024px) {
+    .image {
+        flex-basis: 50%;
+    }
+}
+
+/* mobile phone */
+@media all and (max-width: 768px) {
+    .image {
+        flex-basis: 100%;
+    }
+}

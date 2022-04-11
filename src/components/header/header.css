@@ -1,0 +1,13 @@
+.header{
+    position: sticky;
+    top: 0px;
+    background-color: white;
+    display: flex;
+    padding: 2%;
+}
+.header input {
+    width: 75%;
+}
+.header select {
+    width: 25%;
+}
