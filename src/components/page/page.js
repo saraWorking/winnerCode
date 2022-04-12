@@ -9,19 +9,21 @@ import './page.css'
 
 export default function Page() {
     const dispatch = useDispatch();
-    const listInnerRef = useRef();
     const imagesList = useSelector(state => state.imagesList);
     const history = useHistory();
     const [filerImages, setFilerImages] = useState([])
     const [sortBy, setSortBy] = useState('SortBy')
     const [string, setString] = useState('')
-    const [itemsPerPage, setItemsPerPage] = useState(parseInt(useLocation()?.state?.itemsPerPage));
-    const [fromToCompare, setFromToCompare] = useState(parseInt(useLocation()?.state?.from));
+    const [itemsPerPage] = useState(parseInt(useLocation()?.state?.itemsPerPage));
+    const [fromToCompare] = useState(parseInt(useLocation()?.state?.from));
     const [from, setFrom] = useState(parseInt(useLocation()?.state?.from));
+    const [isLoaded, setIsLoaded] = useState(false);
 
+    // const unmounted = useRef(false);
 
 
     useEffect(() => {
+
         if (!imagesList.length) {
             history.push("/");
         }
@@ -29,7 +31,10 @@ export default function Page() {
         window.addEventListener('scroll', e => handleScroll(e), true);
         return () => {
             window.removeEventListener('scroll', e => handleScroll(e), true);
+            // unmounted.current=true;
+            setIsLoaded(false);
         };
+        
     }, [])
 
     useEffect(() => {
@@ -88,24 +93,22 @@ export default function Page() {
     const nextPage = () => {
         setFrom(prev => prev + itemsPerPage);
     }
+    
 
     return (<>
         <Header setSortBy={setSortBy} setString={setString} sortBy={sortBy}></Header>
 
 
-        <div className="container"
-            ref={listInnerRef}
-            style={{ height: "", overflowY: "auto" }}>
+        <div className="container">
             {filerImages[0] && filerImages.map((image, i) => (
                 <Image
-                    key={i}
+                    key={image.id}
                     url={image.thumbnailUrl} title={image.title}
                 ></Image>
             ))}
-
         </div>
-        {window.scrollY == 0 && <bottom className="btn btn-primary"//if hasn't scroll 
-            onClick={() => { nextPage() }}>get the next page</bottom>}
+        {window.scrollY == 0 && <button className="btn btn-primary"//if hasn't scroll 
+            onClick={() => { nextPage() }}>get the next page</button>}
     </>
     )
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import './header.css'
-export default function Header(props) {
+
+const Header = React.memo((props)=> {
 
     const{ setString,setSortBy,sortBy}=props;
 
@@ -17,3 +18,5 @@ export default function Header(props) {
             </select></div>
     )
 }
+)
+export default Header;
